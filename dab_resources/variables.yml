@@ -52,3 +52,6 @@ variables:
   git_url:
     description: Git URl
     default: https://github.com/kiranskmr/workflows_automation
+  job_prefix:
+    description: A unifying prefix for this bundle's job and task names.
+    default: kiran

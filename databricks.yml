@@ -9,7 +9,6 @@ include:
 
 sync:
   exclude:
-    - "src"
     - "resources"
 
 experimental:
@@ -19,7 +18,11 @@ experimental:
       @echo Windows is not supported for this preview.
       @exit /b
       '
-      
+
+artifacts:
+  dab-wheel:
+    type: whl
+    path: ./      
   
 targets:
   # The 'dev' target, used for development purposes.

@@ -1,0 +1,36 @@
+resources:
+  jobs:
+    run-unit-tests:
+      name: ${var.job_prefix}-run-unit-tests
+      tasks:
+        - task_key: ${var.job_prefix}-run-unit-tests-task
+          new_cluster:
+            spark_version: ${var.spark_version}
+            node_type_id: ${var.node_type}
+            num_workers: 1
+            spark_env_vars:
+              WORKSPACEBUNDLEPATH: ${workspace.root_path}
+          notebook_task:
+            notebook_path: /Workspace${workspace.root_path}/files/run_unit_tests
+            source: WORKSPACE
+          libraries:
+            - pypi:
+                package: pytest
+
+
+    run-dabdemo-notebook:
+      name: ${var.job_prefix}-run-dabdemo-notebook
+      tasks:
+        - task_key: ${var.job_prefix}-run-dabdemo-notebook-task
+          new_cluster:
+            spark_version: ${var.spark_version}
+            node_type_id: ${var.node_type}
+            num_workers: 1
+            spark_env_vars:
+              WORKSPACEBUNDLEPATH: ${workspace.root_path}
+          notebook_task:
+            notebook_path: /Workspace${workspace.root_path}/files/dabdemo_notebook
+            source: WORKSPACE
+          libraries:
+            - whl: "/Workspace${workspace.root_path}/files/dist/workflows_automation-0.0.1-py3-none-any.whl"
+
