@@ -58,5 +58,5 @@ jobs:
       - name: terraform init
         run: terraform init -backend-config="storage_account_name=$STORAGE_ACCOUNT" -backend-config="container_name=$CONTAINER_NAME" -backend-config="resource_group_name=$RESOURCE_GROUP" -backend-config="key=tfstate"
       - name: terraform apply
-        run: terraform apply apply -auto-approve
+        run: terraform apply -auto-approve
         working-directory: terraform/modules/workflows
