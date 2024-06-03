@@ -164,6 +164,9 @@ stages:
         ARM_CLIENT_ID: $(STAGING_AZURE_SP_APPLICATION_ID)
         ARM_CLIENT_SECRET: $(STAGING_AZURE_SP_CLIENT_SECRET)
 
+
+        
+
 # Run prod bundle CD stage after successfully merging into the release branch
 - stage: prodBundleCD
   displayName: 'Prod bundle deployment for workflows_automation'
@@ -202,7 +205,6 @@ stages:
     # Validate bundle to be deployed to the prod workspace
     - script: |
         databricks bundle validate --var="warehouse_id=$(BUNDLE_VAR_warehouse_id),node_type=$(BUNDLE_VAR_node_type)" -t prod
-      workingDirectory: $(workingDirectory)
       displayName: 'Validate bundle for prod'
       env:
         ARM_TENANT_ID: $(PROD_AZURE_SP_TENANT_ID)
@@ -213,7 +215,6 @@ stages:
     # Deploy bundle to prod workspace
     - script: |
         databricks bundle deploy --var="warehouse_id=$(BUNDLE_VAR_warehouse_id),node_type=$(BUNDLE_VAR_node_type)" -t prod
-      workingDirectory: $(workingDirectory)
       displayName: 'Deploy bundle to prod'
       env:
         ARM_TENANT_ID: $(PROD_AZURE_SP_TENANT_ID)
