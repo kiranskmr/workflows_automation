@@ -65,11 +65,6 @@ targets:
       host: https://adb-365805097001262.2.azuredatabricks.net
     variables:
       dbt_catalog: sales_dbt
-    run_as:
-      # This runs as robby.kiskanyan@databricks.com in production. Alternatively,
-      # a service principal could be used here using service_principal_name
-      # (see Databricks documentation).
-      service_principal_name: ecae35c7-edf7-445a-9b2d-959abc721d1f
     resources:
       jobs:
         dbt_dss_job:
@@ -89,11 +84,6 @@ targets:
     workspace:
       root_path: /Shared/.bundle/prod/${bundle.name}
       host: https://adb-365805097001262.2.azuredatabricks.net
-    run_as:
-      # This runs as robby.kiskanyan@databricks.com in production. Alternatively,
-      # a service principal could be used here using service_principal_name
-      # (see Databricks documentation).
-      service_principal_name: ecae35c7-edf7-445a-9b2d-959abc721d1f
     resources:
       jobs:
         dbt_dss_job:
