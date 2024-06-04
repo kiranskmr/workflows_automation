@@ -5,7 +5,9 @@ resources:
   jobs:
     run-dabdemo-notebook:
       name: DAB-Wheel-File-Dependency
-      
+      permissions:
+        - group_name: users
+          level: CAN_MANAGE
       tags:
         created_by: ${workspace.current_user.userName}
       format: MULTI_TASK

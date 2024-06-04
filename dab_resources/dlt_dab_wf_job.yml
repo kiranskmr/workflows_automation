@@ -17,7 +17,7 @@ resources:
         "bundle.environment": "${bundle.environment}"
 
       permissions:
-        - level: CAN_VIEW
+        - level: CAN_MANAGE
           group_name: users
       
       catalog: sales_dlt

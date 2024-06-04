@@ -8,6 +8,9 @@ resources:
       tags:
         created_by: ${workspace.current_user.userName}
       format: MULTI_TASK
+      permissions:
+        - group_name: users
+          level: CAN_MANAGE
       tasks:
 
         - task_key: Set-up-UC-Catalog-and-Schema
