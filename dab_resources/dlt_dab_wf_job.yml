@@ -1,5 +1,3 @@
-run_as:
-  user_name: ${workspace.current_user.userName}
 
 resources:
   pipelines:
