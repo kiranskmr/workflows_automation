@@ -10,7 +10,7 @@ def create_notebook_job(filename: str):
     def my_notebook():
         pass
 
-    @job(name="WAT - Notebook Job")
+    @job(name="PyDABS - Notebook Job")
     def my_job():
         my_notebook()
 

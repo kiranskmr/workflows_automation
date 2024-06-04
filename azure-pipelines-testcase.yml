@@ -48,4 +48,8 @@ jobs:
         pytest --junitxml=$(Build.StagingDirectory)/test.xml
       workingDirectory: 'src'
       displayName: 'Run unit tests with pytest'
+      env:
+        ARM_TENANT_ID: $(STAGING_AZURE_SP_TENANT_ID)
+        ARM_CLIENT_ID: $(STAGING_AZURE_SP_APPLICATION_ID)
+        ARM_CLIENT_SECRET: $(STAGING_AZURE_SP_CLIENT_SECRET)
 

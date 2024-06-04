@@ -42,11 +42,11 @@ stages:
       displayName: 'Install Databricks CLI'
 
     - script: |
-        pip install poetry
-      displayName: 'Install Poetry'
+        pip install wheel
+      displayName: 'Install wheel'   
     - script: |
-        poetry build
-      displayName: 'Poetry Build whl'
+        python3 setup.py bdist_wheel
+      displayName: 'Build whl file'
 
     - script: databricks fs cp $(Build.Repository.LocalPath)/dist/*.whl dbfs:/Volumes/wheel_catalog/wheel_schema/wheel_volume --overwrite
       displayName: 'Copy to volumes'
@@ -60,11 +60,19 @@ stages:
     - script: terraform -chdir=terraform/modules/workflows/  validate
       displayName: 'Terraform Validate'
       workingDirectory: "$(Build.SourcesDirectory)"
-    - script: terraform -chdir=terraform/modules/workflows/  plan 
+    - script: terraform -chdir=terraform/modules/workflows/ plan -lock=false
       displayName: 'Terraform Plan'
+      env:
+        ARM_TENANT_ID: $(STAGING_AZURE_SP_TENANT_ID)
+        ARM_CLIENT_ID: $(STAGING_AZURE_SP_APPLICATION_ID)
+        ARM_CLIENT_SECRET: $(STAGING_AZURE_SP_CLIENT_SECRET)
       workingDirectory: "$(Build.SourcesDirectory)"
     - script: terraform -chdir=terraform/modules/workflows/  apply -auto-approve
       displayName: 'Terraform Apply'
       workingDirectory: "$(Build.SourcesDirectory)"
+      env:
+        ARM_TENANT_ID: $(STAGING_AZURE_SP_TENANT_ID)
+        ARM_CLIENT_ID: $(STAGING_AZURE_SP_APPLICATION_ID)
+        ARM_CLIENT_SECRET: $(STAGING_AZURE_SP_CLIENT_SECRET)
 
       

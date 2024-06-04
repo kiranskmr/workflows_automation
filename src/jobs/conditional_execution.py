@@ -1,7 +1,7 @@
 from databricks.bundles.jobs import task, job
 
 
-@job(name="WAT - Detect Anomalies job")
+@job(name="PyDABS - Detect Anomalies job")
 def detect_anomalies():
     anomaly_count = get_anomaly_count()
 

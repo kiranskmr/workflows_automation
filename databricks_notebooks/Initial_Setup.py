@@ -24,4 +24,3 @@ spark.conf.set("pii_volume_schema", pii_volume_schema_value)
 # MAGIC CREATE CATALOG IF NOT EXISTS  ${dlt_catalog};
 # MAGIC CREATE SCHEMA IF NOT EXISTS  ${dlt_catalog}.${dlt_schema};
 # MAGIC CREATE SCHEMA IF NOT EXISTS  ${dbt_catalog}.${volume_schema};
-# MAGIC CREATE SCHEMA IF NOT EXISTS  ${dbt_catalog}.${pii_volume_schema};
