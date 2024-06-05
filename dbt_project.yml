@@ -23,11 +23,11 @@ dispatch:
  - macro_namespace: dbt_utils
    search_order: ['dbt_project_evaluator','dbsql_dbt_tpch','spark_utils', 'dbt_utils']
 
-models:
- dbt_artifacts:
-   +database: sales_dbt 
-   +schema: artifacts
- +persist_docs:
-    relation: true
-    columns: true
+# models:
+#  dbt_artifacts:
+#    +database: sales_dbt 
+#    +schema: artifacts
+#  +persist_docs:
+#     relation: true
+#     columns: true
 

@@ -18,7 +18,7 @@ pluggy==1.4.0
 protobuf==4.25.2
 py==1.11.0
 py4j==0.10.9.7
-pyarrow==15.0.0
+pyarrow<=14.0.0
 pyasn1==0.5.1
 pyasn1-modules==0.3.0
 pyparsing==3.1.1
@@ -31,10 +31,16 @@ rsa==4.9
 six==1.16.0
 tomli==2.0.1
 tzdata==2023.4
-urllib3==2.1.0
+urllib3
 --extra-index-url https://databricks.github.io/workflows-authoring-toolkit
 workflows_authoring_toolkit==0.4.2
 setuptools
 wheel
 poetry
--e .
+mlflow
+scikit-learn>
+matplotlib>
+pillow>
+Jinja2
+pyspark
+

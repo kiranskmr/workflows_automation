@@ -18,8 +18,8 @@ resources:
         - level: CAN_MANAGE
           group_name: users
       
-      catalog: sales_dlt
-      target: sales_${workspace.current_user.short_name}
+      catalog: ${var.dlt_catalog}
+      target: dlt
 
       clusters:
             - label: default

@@ -33,7 +33,7 @@ resource "databricks_job" "whl" {
     }
 
     library {
-      whl = "/Volumes/wheel_catalog/wheel_schema/wheel_volume/data-0.0.1-py3-none-any.whl"
+      whl = "/Volumes/dev/wheel/wheel_volume/data-0.0.1-py3-none-any.whl"
 
     }
 

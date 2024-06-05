@@ -17,7 +17,7 @@ resources:
             notebook_path: ${var.wheeljob}
             source: GIT
           libraries:
-            - whl: "/Volumes/wheel_catalog/wheel_schema/wheel_volume/data-0.0.1-py3-none-any.whl"
+            - whl: "/Volumes/${bundle.target}/wheel/wheel_volume/data-0.0.1-py3-none-any.whl"
               
       job_clusters:
         - job_cluster_key: job_cluster_wheel

@@ -1,7 +1,7 @@
 variables:
   volume_catalog:
     description: Volume Catalog to use
-    default: sales_dbt
+    default: ${bundle.target}
   volume_schema:
     description: Volume schema to use
     default: wine
@@ -36,7 +36,7 @@ variables:
     default: 15.1.x-scala2.12
   spark_version_ml:
     description: Git brach to use
-    default: 14.2.x-cpu-ml-scala2.12
+    default: 13.3.x-cpu-ml-scala2.12
   host:
     description: Workspace host
     default: https://adb-984752964297111.11.azuredatabricks.net/
@@ -55,3 +55,9 @@ variables:
   wheeljob:
     description: wheel job script
     default: databricks_notebooks/dabdemo_notebook
+  experiment_name:
+    description: Experiment name for the model training.
+    default: /Users/${workspace.current_user.userName}/${bundle.target}-mlops-experiment
+  model_name:
+    description: Model name for the model training.
+    default: mlops_model

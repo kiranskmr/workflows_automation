@@ -17,10 +17,10 @@ resources:
           notebook_task:
             base_parameters:
               dbt_catalog: ${var.dbt_catalog}
-              dbt_schema: ${var.dbt_schema}_${workspace.current_user.short_name}
+              dbt_schema: ${var.dbt_schema}
               dlt_catalog: ${var.dlt_catalog}
-              dlt_schema: ${var.dlt_schema}_${workspace.current_user.short_name}
-              volume_schema: ${var.volume_schema}_${workspace.current_user.short_name}
+              dlt_schema: ${var.dlt_schema}
+              volume_schema: ${var.volume_schema}
               pii_volume_schema: ${var.pii_volume_schema}
             notebook_path: ${var.initial_job}
             source: GIT
@@ -37,7 +37,7 @@ resources:
               - dbt build
             warehouse_id: ${var.warehouse_id} 
             catalog: ${var.dbt_catalog}
-            schema: ${var.dbt_schema}_${workspace.current_user.short_name}
+            schema: ${var.dbt_schema}
           job_cluster_key: dab_shared_cluster
           libraries:
             - pypi:
@@ -50,9 +50,9 @@ resources:
           notebook_task:
             base_parameters:
               dbt_catalog: ${var.dbt_catalog}
-              dbt_schema: ${var.dbt_schema}_${workspace.current_user.short_name}
+              dbt_schema: ${var.dbt_schema}
               dlt_catalog: ${var.dlt_catalog}
-              dlt_schema: ${var.dlt_schema}_${workspace.current_user.short_name}
+              dlt_schema: ${var.dlt_schema}
             notebook_path: ${var.security_job}
             source: GIT
 
@@ -66,28 +66,17 @@ resources:
         - task_key: VOLUME-Ingest-Data
           depends_on:
           - task_key: Set-up-UC-Catalog-and-Schema
-          job_cluster_key: pii_cluster
+          job_cluster_key: dab_shared_cluster
           notebook_task:
             base_parameters:
               volume_catalog: ${var.volume_catalog}
-              volume_schema: ${var.volume_schema}_${workspace.current_user.short_name}
-              pii_volume_schema: ${var.pii_volume_schema}_${workspace.current_user.short_name}
+              volume_schema: ${var.volume_schema}
+              pii_volume_schema: ${var.pii_volume_schema}
             notebook_path: ${var.volume_job}
             source: GIT
 
            
       job_clusters:
-        - job_cluster_key: pii_cluster
-          new_cluster:
-            spark_version: ${var.spark_version}
-            node_type_id: ${var.node_type}
-            custom_tags:
-              ResourceClass: MultiNode
-            spark_env_vars:
-              PYSPARK_PYTHON: /databricks/python3/bin/python3
-            data_security_mode: SINGLE_USER
-            num_workers: 8
-
         - job_cluster_key: dab_shared_cluster
           new_cluster:
             spark_version: ${var.spark_version}
@@ -97,7 +86,7 @@ resources:
             spark_env_vars:
               PYSPARK_PYTHON: /databricks/python3/bin/python3
             data_security_mode: USER_ISOLATION
-            num_workers: 8
+            num_workers: 1
 
 
       git_source:

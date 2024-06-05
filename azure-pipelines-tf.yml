@@ -48,7 +48,7 @@ stages:
         python3 setup.py bdist_wheel
       displayName: 'Build whl file'
 
-    - script: databricks fs cp $(Build.Repository.LocalPath)/dist/*.whl dbfs:/Volumes/wheel_catalog/wheel_schema/wheel_volume --overwrite
+    - script: databricks fs cp $(Build.Repository.LocalPath)/dist/*.whl dbfs:/Volumes/dev/wheel/wheel_volume --overwrite
       displayName: 'Copy to volumes'
       env:
         ARM_TENANT_ID: $(STAGING_AZURE_SP_TENANT_ID)
