@@ -2,7 +2,12 @@
 variable "job_name_whl" {
   description = "A name for the job."
   type        = string
-  default     = "My Job"
+  default     = "Terraform-Wheel-File-Dependency"
+}
+
+variable "volume_catalog" {
+  description = "A name for volume catalog."
+  type        = string
 }
 
 
@@ -10,6 +15,11 @@ variable "notebook_filename_whl" {
   description = "File name for the wheel file job"
   type        = string
   default     = "dabdemo_notebook"
+}
+variable "notebook_subdirectory" {
+  description = "folder for file"
+  type        = string
+  default     = "databricks_notebooks"
 }
 
 resource "databricks_job" "whl" {
@@ -33,7 +43,7 @@ resource "databricks_job" "whl" {
     }
 
     library {
-      whl = "/Volumes/dev/wheel/wheel_volume/data-0.0.1-py3-none-any.whl"
+      whl = "/Volumes/${var.volume_catalog}/wheel_dlt/wheel_volume/data-0.0.1-py3-none-any.whl"
 
     }
 
@@ -56,4 +66,29 @@ resource "databricks_job" "whl" {
     job_cluster_key = "tf_job_cluster_wheel"
   }
 
+}
+
+
+terraform {
+  required_providers {
+    databricks = {
+      source = "databricks/databricks"
+    }
+  }
+}
+# Retrieve information about the current user.
+data "databricks_current_user" "me" {}
+
+
+
+# Create the cluster with the "smallest" amount
+# of resources allowed.
+data "databricks_node_type" "smallest" {
+  local_disk = true
+}
+
+# Use the latest Databricks Runtime
+# Long Term Support (LTS) version.
+data "databricks_spark_version" "latest_lts" {
+  long_term_support = true
 }

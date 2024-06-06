@@ -44,7 +44,7 @@ jobs:
         working-directory: .
         env:
           DATABRICKS_TOKEN: ${{ secrets.SP_TOKEN }}
-          DATABRICKS_BUNDLE_ENV: qa
+          DATABRICKS_BUNDLE_ENV: ${{ vars.DATABRICKS_BUNDLE_ENV }}
           DATABRICKS_HOST: ${{ vars.DATABRICKS_HOST }}
           BUNDLE_VAR_warehouse_id: ${{ vars.BUNDLE_VAR_warehouse_id }}
           BUNDLE_VAR_node_type: ${{ vars.BUNDLE_VAR_node_type }}

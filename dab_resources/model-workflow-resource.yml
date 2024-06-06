@@ -8,7 +8,7 @@ common_permissions:
 resources:
   jobs:
     model_training_job:
-      name: Model-training-job
+      name: DABS - MLOPS Model-training-job
       job_cluster_key: model_training_job_cluster
       tasks:
         - task_key: Train

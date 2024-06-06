@@ -13,19 +13,19 @@ variables:
     default: databricks_notebooks/Volume
   dbt_catalog:
     description: Catalog to use
-    default: sales_dbt
+    default: ${bundle.target}
   dlt_catalog:
     description: Catalog to use
-    default: sales_dlt
+    default: ${bundle.target}
   node_type:
     description: Node Type
     default: Standard_DS3_v2  
   dbt_schema:
     description: Schema to use
-    default: sales
+    default: dbt
   dlt_schema:
     description: Schema to use
-    default: sales
+    default: dlt
   warehouse_id:
     description: Databricks SQL warehouse to use
   git_branch:

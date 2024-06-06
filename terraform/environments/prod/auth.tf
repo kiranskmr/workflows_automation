@@ -1,7 +1,4 @@
-variable "databricks_connection_profile" {
-  description = "The name of the Databricks connection profile to use."
-  type        = string
-}
+
 
 
 # Initialize the Databricks Terraform provider.

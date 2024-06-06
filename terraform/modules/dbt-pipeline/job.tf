@@ -1,28 +1,39 @@
+terraform {
+  required_providers {
+    databricks = {
+      source = "databricks/databricks"
+    }
+  }
+}
+# Retrieve information about the current user.
+data "databricks_current_user" "me" {}
+
+
+
 
 variable "job_name" {
   description = "A name for the job."
   type        = string
-  default     = "My Job"
+  default     = "Terraform-Customer Order Details"
 }
 variable "dbt_catalog" {
   description = "dbt catalog names"
   type        = string
-  default     = "sales_dbt_tf"
 }
 variable "dbt_schema" {
   description = "dbt schema name"
   type        = string
-  default     = "sales"
+  default     = "dbt_tf"
 }
 variable "dlt_catalog" {
   description = "dlt catalog name"
   type        = string
-  default     = "sales_dlt_tf"
+  default     = "dlt"
 }
 variable "dlt_schema" {
   description = "dlt schema name"
   type        = string
-  default     = "sales"
+  default     = "dlt"
 }
 variable "notebook_subdirectory" {
   description = "folder for file"
@@ -54,19 +65,18 @@ variable "cluster_environment_type" {
 variable "volume_catalog" {
   description = "Volume catalog"
   type        = string
-  default     = "sales_dbt_tf"
 }
 
 variable "volume_schema" {
   description = "Volume Schema"
   type        = string
-  default     = "wine"
+  default     = "wine_tf"
 }
 
 variable "pii_volume_schema" {
   description = "Volume Schema for pii data"
   type        = string
-  default     = "pii"
+  default     = "pii_tf"
 }
 
 
@@ -84,6 +94,17 @@ variable "spark_version" {
   description = "Spark version Ml job"
   type        = string
   default     = "14.2.x-cpu-ml-scala2.12"
+}
+
+
+variable "warehouse_id" {
+  description = "Sql warehouse id"
+  type        = string
+}
+
+variable "pipeline_id" {
+  description = "dlt pipeline id"
+  type        = string
 }
 
 # Create the cluster with the "smallest" amount
@@ -122,21 +143,6 @@ resource "databricks_job" "this" {
     job_cluster_key = "tf_shared_cluster"
   }
 
-  job_cluster {
-    new_cluster {
-      spark_version = data.databricks_spark_version.latest_lts.id
-      node_type_id  = data.databricks_node_type.smallest.id
-      custom_tags   = { ResourceClass = "MultiNode" }
-      spark_env_vars = {
-        PYSPARK_PYTHON = "/databricks/python3/bin/python3"
-      }
-      num_workers        = 8
-      data_security_mode = "SINGLE_USER"
-
-
-    }
-    job_cluster_key = "pii_cluster"
-  }
 
 
   git_source {
@@ -196,7 +202,7 @@ resource "databricks_job" "this" {
       ]
       project_directory = ""
 
-      warehouse_id = databricks_sql_endpoint.tfwarehouse.id
+      warehouse_id = var.warehouse_id
       catalog      = var.dbt_catalog
       schema       = var.dbt_schema
 
@@ -215,14 +221,14 @@ resource "databricks_job" "this" {
     }
     task_key = "DLT-Ingest-customer-data-and-transformation"
     pipeline_task {
-      pipeline_id = databricks_pipeline.this.id
+      pipeline_id = var.pipeline_id
     }
   }
 
 
   task {
     task_key        = "VOLUME-Ingest-Data"
-    job_cluster_key = "pii_cluster"
+    job_cluster_key = "tf_shared_cluster"
     depends_on {
       task_key = "Set-up-UC-Catalog-and-Schema"
     }

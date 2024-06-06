@@ -1,13 +1,31 @@
+terraform {
+  required_providers {
+    databricks = {
+      source = "databricks/databricks"
+    }
+  }
+}
+# Retrieve information about the current user.
+data "databricks_current_user" "me" {}
+
 variable "dlt_schema_tf" {
   description = "A catalog for the tf dlt job."
   type        = string
-  default     = "sales_tf"
+  default     = "dlt_tf"
 }
 variable "dlt_catalog_tf" {
   description = "A schema for dlt tf job"
   type        = string
-  default     = "sales_dlt_tf"
+  default     = "dev"
 }
+
+variable "dlt_pipeline_name" {
+  description = "A name for the job"
+  type        = string
+  default     = "Terraform - Customer Order Details - DLT"
+}
+
+
 
 resource "databricks_notebook" "dlt_pipeline_notebook_base" {
   source = "${path.module}/../../../databricks_notebooks/DLT-base_tables.sql"
@@ -23,7 +41,7 @@ resource "databricks_notebook" "dlt_pipeline_notebook_wh" {
 }
 
 resource "databricks_pipeline" "this" {
-  name    = "Terraform -  Customer Order Details - DLT"
+  name    = var.dlt_pipeline_name
   target  = var.dlt_schema_tf
   catalog = var.dlt_catalog_tf
 
@@ -62,4 +80,11 @@ resource "databricks_pipeline" "this" {
   development = true
   continuous  = false
   channel     = "CURRENT"
+}
+
+
+
+output "pipeline_id" {
+  description = "The ID of the DLT pipeline"
+  value       = databricks_pipeline.this.id
 }
