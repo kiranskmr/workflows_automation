@@ -18,7 +18,8 @@ jobs:
       and(
         not(eq(variables['Build.Reason'], 'IndividualCI')),
         eq(variables['Build.Reason'], 'PullRequest'),
-        eq(variables['System.PullRequest.TargetBranch'], 'main')
+        eq(variables['System.PullRequest.TargetBranch'], 'main'),
+        not(eq(variables['System.PullRequest.TargetBranch'], 'release'))
       )
     pool:
       vmImage: 'ubuntu-latest'
