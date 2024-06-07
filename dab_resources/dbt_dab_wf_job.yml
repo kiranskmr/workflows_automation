@@ -3,7 +3,7 @@
 resources:
   jobs:
     dbt_dss_job:
-      name: DABS - Customer Order Details
+      name: DABS - Customer Order Details - DBT job
       format: MULTI_TASK
       permissions:
         - group_name: users
@@ -92,3 +92,6 @@ resources:
             git_provider: gitHub
             git_branch: main
         
+      tags:
+        env: ${bundle.target}
+        source: DABS

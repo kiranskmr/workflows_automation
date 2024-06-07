@@ -64,6 +64,11 @@ variable "model_name" {
 resource "databricks_job" "train_validate" {
   name   = var.job_name
   format = "MULTI_TASK"
+   tags = {
+    owner = "${data.databricks_current_user.me.alphanumeric}"
+    source= "Terraform"
+    env= var.env
+  }
   job_cluster {
     new_cluster {
       spark_version = data.databricks_spark_version.ml.id

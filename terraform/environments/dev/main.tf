@@ -2,7 +2,7 @@
 module "dlt-pipeline" {
   source = "../../modules/dlt-pipeline"
   dlt_catalog_tf = "dev"
-  dlt_pipeline_name= "Dev Terraform - Customer Order Details - DLT"
+  dlt_pipeline_name= "Dev Terraform - Customer Order Details - DLT job"
  
 }
 
@@ -22,7 +22,7 @@ module "dbt-pipeline" {
   depends_on = [module.dlt-pipeline, module.sql-warehouse]
   warehouse_id = module.sql-warehouse.warehouse_id
   pipeline_id = module.dlt-pipeline.pipeline_id
-  job_name= "Dev Terraform - Customer Order Details"
+  job_name= "Dev Terraform - Customer Order Details - DBT job"
 
  
 }
@@ -31,7 +31,7 @@ module "dbt-pipeline" {
 module "wheel-job" {
 source = "../../modules/wheel-job"
 volume_catalog = "dev"
-job_name_whl = "Dev Terraform - Wheel File Dependency"
+job_name_whl = "Dev Terraform - Python whl File from Volume job"
 }
 
 
@@ -39,8 +39,8 @@ job_name_whl = "Dev Terraform - Wheel File Dependency"
 module "mlops-job" {
 source = "../../modules/mlops-job"
 output_table_catalog = "dev"
-job_name = "Dev Terraform - MLOPS Model-training-job"
-job_name_feature ="Dev Terraform - MLOPS Write-feature-table-job"
+job_name = "Dev Terraform - MLOPS Model training job"
+job_name_feature ="Dev Terraform - MLOPS Write feature table job"
 env ="dev"
 experiment_name="${data.databricks_current_user.me.home}/tf-dev-mlops-experiment"
 model_name="tf-mlops_model"

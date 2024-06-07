@@ -6,7 +6,8 @@ permissions:
 resources:
   jobs:
     batch_inference_job:
-      name: Batch-inference
+      name: DABS - MLOPS Batch inference job
+
       tasks:
         - task_key: batch_inference_job
           job_cluster_key: infer_job_cluster
@@ -42,3 +43,7 @@ resources:
       #    on_failure:
       #      - first@company.com
       #      - second@company.com
+
+      tags:
+        env: ${bundle.target}
+        source: DABS

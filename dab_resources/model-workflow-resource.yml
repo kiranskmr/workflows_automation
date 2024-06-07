@@ -8,7 +8,7 @@ common_permissions:
 resources:
   jobs:
     model_training_job:
-      name: DABS - MLOPS Model-training-job
+      name: DABS - MLOPS Model training job
       job_cluster_key: model_training_job_cluster
       tasks:
         - task_key: Train
@@ -99,3 +99,6 @@ resources:
       #    on_failure:
       #      - first@company.com
       #      - second@company.com
+      tags:
+        env: ${bundle.target}
+        source: DABS

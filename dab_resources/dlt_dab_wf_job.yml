@@ -2,7 +2,7 @@
 resources:
   pipelines:
     dlt_sales_pipeline:
-      name: DABS -  Customer Order Details - DLT
+      name: DABS -  Customer Order Details - DLT job
       libraries:
         - notebook:
             path: ../databricks_notebooks/DLT-base_tables.sql

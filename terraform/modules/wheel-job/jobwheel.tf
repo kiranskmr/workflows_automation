@@ -2,7 +2,7 @@
 variable "job_name_whl" {
   description = "A name for the job."
   type        = string
-  default     = "Terraform-Wheel-File-Dependency"
+  default     = "Terraform Wheel File Dependency job"
 }
 
 variable "volume_catalog" {
@@ -25,7 +25,11 @@ variable "notebook_subdirectory" {
 resource "databricks_job" "whl" {
   name   = var.job_name_whl
   format = "MULTI_TASK"
-
+ tags = {
+    owner = "${data.databricks_current_user.me.alphanumeric}"
+    source= "Terraform"
+    env= var.volume_catalog
+  }
   git_source {
     url      = "https://github.com/kiranskmr/workflows_automation.git"
     provider = "gitHub"

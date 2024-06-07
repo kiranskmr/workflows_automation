@@ -41,6 +41,11 @@ variable "notebook_write" {
 resource "databricks_job" "this" {
   name   = var.job_name_feature
   format = "MULTI_TASK"
+   tags = {
+    owner = "${data.databricks_current_user.me.alphanumeric}"
+    source= "Terraform"
+    env= var.env
+  }
   job_cluster {
     new_cluster {
       spark_version = data.databricks_spark_version.ml.id

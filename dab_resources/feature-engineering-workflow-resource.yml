@@ -9,7 +9,7 @@ common_permissions:
 resources:
   jobs:
     write_feature_table_job:
-      name: DABS - MLOPS Write-feature-table-job
+      name: DABS - MLOPS Write feature table job
       tasks:
         - task_key: PickupFeatures
           job_cluster_key: write_feature_table_job_cluster
@@ -66,4 +66,8 @@ resources:
       #    on_failure:
       #      - first@company.com
       #      - second@company.com
+
+      tags:
+        env: ${bundle.target}
+        source: DABS
 

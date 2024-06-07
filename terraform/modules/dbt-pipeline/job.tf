@@ -14,7 +14,7 @@ data "databricks_current_user" "me" {}
 variable "job_name" {
   description = "A name for the job."
   type        = string
-  default     = "Terraform-Customer Order Details"
+  default     = "Terraform - Customer Order Details job"
 }
 variable "dbt_catalog" {
   description = "dbt catalog names"
@@ -127,6 +127,11 @@ data "databricks_spark_version" "ml" {
 resource "databricks_job" "this" {
   name   = var.job_name
   format = "MULTI_TASK"
+  tags = {
+    owner = "${data.databricks_current_user.me.alphanumeric}"
+    source= "Terraform"
+    env = var.dbt_catalog
+  }
   job_cluster {
     new_cluster {
       spark_version = data.databricks_spark_version.latest_lts.id

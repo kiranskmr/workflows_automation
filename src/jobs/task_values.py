@@ -11,7 +11,7 @@ def print_message(msg: str):
     print(msg)
 
 
-@job(name="PyDABS - Task Values")
+@job(name="PyDABS - Task Values job")
 def task_values():
     message = get_message()
 
