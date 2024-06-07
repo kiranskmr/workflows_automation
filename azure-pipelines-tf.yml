@@ -215,6 +215,10 @@ stages:
     )
 
   jobs:
+  - deployment: prod_deploy
+    environment: prod
+    workspace:
+      clean: all
   - job: prodTerraformCD
     displayName: 'Terraform deployment for workflows_automation prod'
 

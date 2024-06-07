@@ -13,7 +13,7 @@ resource "azuredevops_git_repository" "testcasepipeline" {
 
 resource "azuredevops_build_definition" "testcasepipelinebuild" {
   project_id = azuredevops_project.project.id
-  name       = "Test Case Build Pipeline"
+  name       = "Run Unit Test Case Build Pipeline"
 
   ci_trigger {
     use_yaml = true

@@ -36,7 +36,7 @@ resources:
       schedule:
         quartz_cron_expression: "0 0 11 * * ?" # daily at 11am
         timezone_id: UTC
-      # If you want to turn on notifications for this job, please uncomment the below code,
+      # If you want to turn on notifications for this job, please uncomment the below code block,
       # and provide a list of emails to the on_failure argument.
       #
       #  email_notifications:

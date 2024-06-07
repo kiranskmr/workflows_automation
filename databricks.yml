@@ -50,8 +50,6 @@ targets:
 
   test:
     mode: development
-    workspace:
-      host: https://adb-365805097001262.2.azuredatabricks.net
     variables:
       dbt_catalog: test
       dlt_catalog: test
@@ -82,7 +80,6 @@ targets:
       dbt_schema: dbt
     workspace:
       root_path: /Shared/.bundle/prod/${bundle.name}
-      host: https://adb-365805097001262.2.azuredatabricks.net
     resources:
       jobs:
         dbt_dss_job:
