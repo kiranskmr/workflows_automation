@@ -38,7 +38,7 @@ jobs:
 
       - run: pip3 install wheel
 
-      # Deploy the bundle to the "test" target as defined
+      # Deploy the bundle to the "prod" target as defined
       # in the bundle's settings file.
       - run: databricks bundle validate --var="warehouse_id=${{ vars.BUNDLE_VAR_warehouse_id }},node_type=${{ vars.BUNDLE_VAR_node_type }}" -t prod
         name: "Validate Bundle in prod"
@@ -52,7 +52,7 @@ jobs:
           ARM_CLIENT_ID: ${{ vars.CLIENT_ID }}
           ARM_CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
 
-      # Deploy the bundle to the "test" target as defined
+      # Deploy the bundle to the "prod" target as defined
       # in the bundle's settings file.
       - run: databricks bundle deploy --var="warehouse_id=${{ vars.BUNDLE_VAR_warehouse_id }},node_type=${{ vars.BUNDLE_VAR_node_type }}" -t prod
         name: "Deploy Bundle in prod"
@@ -62,6 +62,13 @@ jobs:
           DATABRICKS_HOST: ${{ vars.DATABRICKS_HOST }}
           BUNDLE_VAR_warehouse_id: ${{ vars.BUNDLE_VAR_warehouse_id }}
           BUNDLE_VAR_node_type: ${{ vars.BUNDLE_VAR_node_type }}
+          ARM_TENANT_ID: ${{ vars.TENANT_ID }}
+          ARM_CLIENT_ID: ${{ vars.CLIENT_ID }}
+          ARM_CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+      - run: databricks fs cp ${{ github.workspace }}/dist/*.whl dbfs:/Volumes/prod/wheel/wheel_volume --overwrite
+        name: "Copy whl to volumes"
+        env:
+          DATABRICKS_HOST: ${{ vars.DATABRICKS_HOST }}
           ARM_TENANT_ID: ${{ vars.TENANT_ID }}
           ARM_CLIENT_ID: ${{ vars.CLIENT_ID }}
           ARM_CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
