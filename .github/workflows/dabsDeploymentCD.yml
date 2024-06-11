@@ -5,7 +5,9 @@ name: "DABS & PyDABS Continuous Deployment"
 
 # Ensure that only a single job or workflow using the same concurrency group
 # runs at a time.
-concurrency: 1
+concurrency:
+  group: dabscd
+  cancel-in-progress: true
  
 # Trigger this workflow whenever a pull request is opened against the repo's
 # main branch or an existing pull request's head branch is updated.
