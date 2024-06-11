@@ -1,7 +1,7 @@
 
 # This workflow validates, deploys, and runs the specified Terraform pipeline
-# within a pre-production target named "qa".
-name: "Terraform Continuous Integration"
+# within a pre-production target named "prod".
+name: "Terraform Continuous Deployment"
 
 # Ensure that only a single job or workflow using the same concurrency group
 # runs at a time.
@@ -12,18 +12,17 @@ concurrency: 1
 on:
   pull_request:
     types:
-      - opened
-      - synchronize
+      - closed
     branches:
       - main
-      - release
 
 jobs:
   # Used by the "pipeline_update" job to deploy the bundle.
   # Bundle validation is automatically performed as part of this deployment.
   # If validation fails, this workflow fails.
   stagingbuild:
-    name: "Terraform plan in test"
+    if: github.ref == 'refs/heads/main'
+    name: "Terraform deploy in Test"
     runs-on: ubuntu-latest
     environment: dev
     env:
@@ -67,10 +66,20 @@ jobs:
       - name: terraform plan
         run: terraform plan -lock=false
         working-directory: terraform/environments/test/
+      - name: terraform apply
+        run: terraform apply -auto-approve -lock=false
+        working-directory: terraform/environments/test/
+      - run: pip install wheel
+        name: "Install Wheel"
+      - run: python3 setup.py bdist_wheel
+        name: "Build wheel file"
+      - run: databricks fs cp ${{ github.workspace }}/dist/*.whl dbfs:/Volumes/test/wheel/wheel_volume --overwrite
+        name: "Copy whl to volumes"
 
 
   prodbuild:
-    name: "Terraform plan in prod"
+    if: github.ref == 'refs/heads/release'
+    name: "Terraform deploy in Prod"
     runs-on: ubuntu-latest
     environment: dev
     env:
@@ -114,11 +123,15 @@ jobs:
       - name: terraform plan
         run: terraform plan -lock=false
         working-directory: terraform/environments/prod/
-
-
-
-
-
+      - name: terraform apply
+        run: terraform apply -auto-approve -lock=false
+        working-directory: terraform/environments/prod/
+      - run: pip install wheel
+        name: "Install Wheel"
+      - run: python3 setup.py bdist_wheel
+        name: "Build wheel file"
+      - run: databricks fs cp ${{ github.workspace }}/dist/*.whl dbfs:/Volumes/prod/wheel/wheel_volume --overwrite
+        name: "Copy whl to volumes"
 
 
 

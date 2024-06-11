@@ -60,4 +60,4 @@ variables:
     default: /Users/${workspace.current_user.userName}/${bundle.target}-mlops-experiment
   model_name:
     description: Model name for the model training.
-    default: mlops_model
+    default: ${bundle.target}_mlops_model
