@@ -17,6 +17,7 @@ on:
       - closed
     branches:
       - main
+      - release
 
 jobs:
   # Used by the "pipeline_update" job to deploy the bundle.
