@@ -2,12 +2,18 @@
 
 Create a virtual env
 ```
-virtualenv .venv
+python3.11 -m venv venv
 ```
 
 To activate the virtual environment,
 ```
-. .venv/bin/activate
+source venv/bin/activate
+
+```
+
+Install dependencies,
+```
+pip install -r requirements.txt
 
 ```
 
@@ -35,14 +41,13 @@ databricks auth login --host <workspace-url>
 Install the `dbt-databricks` package using pip
 
 
-Make sure to use python 3.9
-Install pipenv - pip install pipenv
-Run - pipenv install
+pip install dbt-databricks
 
 ```
 
 sample profiles.yml for [dbt with oauth](https://community.databricks.com/t5/technical-blog/using-dbt-core-with-oauth-on-azure-databricks/ba-p/46605)
 
+create a profiles.yml in /Users/user_name/.dbt We will use a Databricks Personal Acccess Token to connect to the workspace.
 
 ```
 default:
@@ -50,12 +55,11 @@ default:
   outputs:
     dev:
       type: databricks
-      catalog: sales_dbt_dev
-      schema: sales
+      catalog: dev
+      schema: dbt
       host: workspace.azuredatabricks.net
       http_path: /sql/1.0/warehouses/warehouse-id
-      auth_type: oauth
-      client_id: clientid
+      token: <PAT>>
 
 ```     
 
@@ -71,8 +75,15 @@ Local path to profiles.yml can be passed when running locally.
 
 ### Deploy as workflow in the configured databricks workspace using DAB
 
-- databricks bundle validate
-- databricks bundle deploy
+If Deploying to Azure Databricks workspace
+
+- databricks bundle validate --var="node_type=Standard_DS3_v2,warehouse_id=<sql warehouse id>"
+- databricks bundle deploy --var="node_type=Standard_DS3_v2,warehouse_id=<sql warehouse id>"
+
+If Deploying to AWS Databricks workspace
+
+- databricks bundle validate --var="node_type=i3.xlarge,warehouse_id=<sql warehouse id>"
+- databricks bundle deploy --var="node_type= i3.xlarge,warehouse_id=<sql warehouse id>"
 
 
 
@@ -98,7 +109,7 @@ To run locally, rename the file override.tf.example to override.tf
 
 
 ```     
-cd terraform/modules/workflows
+cd terraform/enironments/dev
 terraform init
 terraform validate
 terraform plan
