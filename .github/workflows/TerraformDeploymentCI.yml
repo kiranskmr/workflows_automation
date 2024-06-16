@@ -63,11 +63,11 @@ jobs:
       - name: terraform fmt
         run: terraform fmt
         working-directory: terraform/environments/test/
-      - name: terraform validate
-        run: terraform validate 
+      - name: terraform validate 
+        run: terraform validate -var git_url="$git_url"
         working-directory: terraform/environments/test/
       - name: terraform plan
-        run: terraform plan -lock=false
+        run: terraform plan -var git_url="$git_url" -lock=false
         working-directory: terraform/environments/test/
 
 
@@ -112,10 +112,10 @@ jobs:
         run: terraform fmt
         working-directory: terraform/environments/prod/
       - name: terraform validate
-        run: terraform validate 
+        run: terraform validate -var git_url="$git_url"
         working-directory: terraform/environments/prod/
       - name: terraform plan
-        run: terraform plan -lock=false 
+        run: terraform plan -var git_url="$git_url" -lock=false 
         working-directory: terraform/environments/prod/
 
 
