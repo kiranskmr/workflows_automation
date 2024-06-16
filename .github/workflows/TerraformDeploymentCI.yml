@@ -87,7 +87,7 @@ jobs:
       ARM_ACCESS_KEY: ${{ secrets.ARM_ACCESS_KEY }}
       git_url: ${{ vars.git_url }}
     steps:
-      # Check out this repo, so that this workflow can access it.
+      # Check out this repo, so that this workflow can access it
       - uses: actions/checkout@v3
       - name: setup python
         uses: actions/setup-python@v4
