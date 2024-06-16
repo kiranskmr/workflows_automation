@@ -51,4 +51,5 @@ job_name_feature ="Terraform - MLOPS Write feature table job"
 env ="prod"
 experiment_name="${data.databricks_current_user.me.home}/tf-prod-mlops-experiment"
 model_name="tf-mlops_model"
+git_url = "${var.git_url}"
 }
