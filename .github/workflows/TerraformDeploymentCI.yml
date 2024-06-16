@@ -56,17 +56,17 @@ jobs:
         uses: hashicorp/setup-terraform@v3   
 
       - name: terraform init
-        run: terraform init -var git_url=$git_url -backend-config="storage_account_name=$STORAGE_ACCOUNT" -backend-config="container_name=$CONTAINER_NAME" -backend-config="resource_group_name=$RESOURCE_GROUP" -backend-config="key=testtf.terraform.tfstate"
+        run: terraform init -var "git_url=$git_url"  -backend-config="storage_account_name=$STORAGE_ACCOUNT" -backend-config="container_name=$CONTAINER_NAME" -backend-config="resource_group_name=$RESOURCE_GROUP" -backend-config="key=testtf.terraform.tfstate"
         working-directory: terraform/environments/test/
 
       - name: terraform fmt
         run: terraform fmt
         working-directory: terraform/environments/test/
       - name: terraform validate 
-        run: terraform validate -var git_url=$git_url
+        run: terraform validate -var "git_url=$git_url" 
         working-directory: terraform/environments/test/
       - name: terraform plan
-        run: terraform plan -var git_url=$git_url -lock=false
+        run: terraform plan -var "git_url=$git_url"  -lock=false
         working-directory: terraform/environments/test/
 
 
@@ -84,6 +84,7 @@ jobs:
       DATABRICKS_HOST: ${{ vars.DATABRICKS_HOST }}
       ARM_SUBSCRIPTION_ID: ${{ vars.SUBSCRIPTION_ID }}
       ARM_ACCESS_KEY: ${{ secrets.ARM_ACCESS_KEY }}
+      git_url: ${{ vars.git_url }}
     steps:
       # Check out this repo, so that this workflow can access it.
       - uses: actions/checkout@v3
@@ -103,17 +104,17 @@ jobs:
         uses: hashicorp/setup-terraform@v3   
 
       - name: terraform init
-        run: terraform init -var git_url=$git_url -backend-config="storage_account_name=$STORAGE_ACCOUNT" -backend-config="container_name=$CONTAINER_NAME" -backend-config="resource_group_name=$RESOURCE_GROUP" -backend-config="key=prodtf.terraform.tfstate"
+        run: terraform init -var "git_url=$git_url"  -backend-config="storage_account_name=$STORAGE_ACCOUNT" -backend-config="container_name=$CONTAINER_NAME" -backend-config="resource_group_name=$RESOURCE_GROUP" -backend-config="key=prodtf.terraform.tfstate"
         working-directory: terraform/environments/prod/
 
       - name: terraform fmt
         run: terraform fmt
         working-directory: terraform/environments/prod/
       - name: terraform validate
-        run: terraform validate -var git_url=$git_url
+        run: terraform validate -var "git_url=$git_url" 
         working-directory: terraform/environments/prod/
       - name: terraform plan
-        run: terraform plan -var git_url=$git_url -lock=false 
+        run: terraform plan -var "git_url=$git_url"  -lock=false 
         working-directory: terraform/environments/prod/
 
 
