@@ -57,20 +57,20 @@ jobs:
         uses: hashicorp/setup-terraform@v3   
 
       - name: terraform init
-        run: terraform init -backend-config="storage_account_name=$STORAGE_ACCOUNT" -backend-config="container_name=$CONTAINER_NAME" -backend-config="resource_group_name=$RESOURCE_GROUP" -backend-config="key=testtf.terraform.tfstate"
+        run: terraform init -var "git_url=$git_url" -backend-config="storage_account_name=$STORAGE_ACCOUNT" -backend-config="container_name=$CONTAINER_NAME" -backend-config="resource_group_name=$RESOURCE_GROUP" -backend-config="key=testtf.terraform.tfstate"
         working-directory: terraform/environments/test/
 
       - name: terraform fmt
         run: terraform fmt
         working-directory: terraform/environments/test/
       - name: terraform validate
-        run: terraform validate
+        run: terraform validate -var "git_url=$git_url"
         working-directory: terraform/environments/test/
       - name: terraform plan
-        run: terraform plan -lock=false
+        run: terraform plan -var "git_url=$git_url" -lock=false
         working-directory: terraform/environments/test/
       - name: terraform apply
-        run: terraform apply -auto-approve -lock=false
+        run: terraform apply -var "git_url=$git_url" -auto-approve -lock=false
         working-directory: terraform/environments/test/
       - run: pip install wheel
         name: "Install Wheel"
@@ -114,20 +114,20 @@ jobs:
         uses: hashicorp/setup-terraform@v3   
 
       - name: terraform init
-        run: terraform init -backend-config="storage_account_name=$STORAGE_ACCOUNT" -backend-config="container_name=$CONTAINER_NAME" -backend-config="resource_group_name=$RESOURCE_GROUP" -backend-config="key=prodtf.terraform.tfstate"
+        run: terraform init -var "git_url=$git_url" -backend-config="storage_account_name=$STORAGE_ACCOUNT" -backend-config="container_name=$CONTAINER_NAME" -backend-config="resource_group_name=$RESOURCE_GROUP" -backend-config="key=prodtf.terraform.tfstate"
         working-directory: terraform/environments/prod/
 
       - name: terraform fmt
         run: terraform fmt
         working-directory: terraform/environments/prod/
       - name: terraform validate
-        run: terraform validate
+        run: terraform validate -var "git_url=$git_url"
         working-directory: terraform/environments/prod/
       - name: terraform plan
-        run: terraform plan -lock=false
+        run: terraform plan -var "git_url=$git_url" -lock=false
         working-directory: terraform/environments/prod/
       - name: terraform apply
-        run: terraform apply -auto-approve -lock=false
+        run: terraform apply -var "git_url=$git_url" -auto-approve -lock=false
         working-directory: terraform/environments/prod/
       - run: pip install wheel
         name: "Install Wheel"
