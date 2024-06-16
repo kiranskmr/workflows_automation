@@ -3,7 +3,7 @@ data "github_user" "current" {
 }
 
 data "github_repository" "repo" {
-  full_name = "kiranskmr/workflows_automation"
+  full_name = var.repo_name
 }
 
 resource "github_repository_environment" "env" {

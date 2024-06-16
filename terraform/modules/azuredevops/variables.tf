@@ -5,6 +5,8 @@ variable "project_name" {
 }
 
 
+
+
 variable "resource_group_location" {
   type        = string
   description = "Location for all resources."
@@ -77,4 +79,14 @@ variable "msi_id" {
   type        = string
   description = "The Managed Service Identity ID. If this value isn't null (the default), 'data.azurerm_client_config.current.object_id' will be set to this value."
   default     = null
+}
+
+variable "subscription_id" {
+  type        = string
+  description = "The azure subscription id"
+}
+
+variable "repo_name" {
+  type        = string
+  description = "reponame in format owner/repo_name"
 }

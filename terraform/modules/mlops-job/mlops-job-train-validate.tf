@@ -12,7 +12,6 @@ data "databricks_current_user" "me" {}
 
 
 
-
 variable "job_name" {
   description = "A name for the job."
   type        = string
@@ -87,7 +86,7 @@ resource "databricks_job" "train_validate" {
 
 
   git_source {
-    url      = "https://github.com/kiranskmr/workflows_automation.git"
+    url      = var.git_url
     provider = "gitHub"
     branch   = "main"
   }

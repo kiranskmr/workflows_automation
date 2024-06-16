@@ -1,4 +1,7 @@
-
+variable "git_url" {
+  description = "git URL"
+  type        = string
+}
 variable "job_name_whl" {
   description = "A name for the job."
   type        = string
@@ -31,7 +34,7 @@ resource "databricks_job" "whl" {
     env= var.volume_catalog
   }
   git_source {
-    url      = "https://github.com/kiranskmr/workflows_automation.git"
+    url      = var.git_url
     provider = "gitHub"
     branch   = "main"
   }

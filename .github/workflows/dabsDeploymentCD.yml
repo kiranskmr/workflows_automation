@@ -44,7 +44,7 @@ jobs:
 
       # Deploy the bundle to the "test" target as defined
       # in the bundle's settings file.
-      - run: databricks bundle validate --var="warehouse_id=${{ vars.BUNDLE_VAR_warehouse_id }},node_type=${{ vars.BUNDLE_VAR_node_type }}" -t test
+      - run: databricks bundle validate --var="warehouse_id=${{ vars.BUNDLE_VAR_warehouse_id }},node_type=${{ vars.BUNDLE_VAR_node_type }},git_url=${{ vars.git_url }}" -t test
         name: "Validate Bundle in test"
         working-directory: .
         env:
@@ -58,7 +58,7 @@ jobs:
 
       # Deploy the bundle to the "test" target as defined
       # in the bundle's settings file.
-      - run: databricks bundle deploy --var="warehouse_id=${{ vars.BUNDLE_VAR_warehouse_id }},node_type=${{ vars.BUNDLE_VAR_node_type }}" -t test
+      - run: databricks bundle deploy --var="warehouse_id=${{ vars.BUNDLE_VAR_warehouse_id }},node_type=${{ vars.BUNDLE_VAR_node_type }},git_url=${{ vars.git_url }}" -t test
         name: "Deploy Bundle in test"
         working-directory: .
         env:
@@ -101,7 +101,7 @@ jobs:
 
       # Deploy the bundle to the "prod" target as defined
       # in the bundle's settings file.
-      - run: databricks bundle validate --var="warehouse_id=${{ vars.BUNDLE_VAR_warehouse_id }},node_type=${{ vars.BUNDLE_VAR_node_type }}" -t prod
+      - run: databricks bundle validate --var="warehouse_id=${{ vars.BUNDLE_VAR_warehouse_id }},node_type=${{ vars.BUNDLE_VAR_node_type }},git_url=${{ vars.git_url }}" -t prod
         name: "Validate Bundle in prod"
         working-directory: .
         env:
@@ -115,7 +115,7 @@ jobs:
 
       # Deploy the bundle to the "prod" target as defined
       # in the bundle's settings file.
-      - run: databricks bundle deploy --var="warehouse_id=${{ vars.BUNDLE_VAR_warehouse_id }},node_type=${{ vars.BUNDLE_VAR_node_type }}" -t prod
+      - run: databricks bundle deploy --var="warehouse_id=${{ vars.BUNDLE_VAR_warehouse_id }},node_type=${{ vars.BUNDLE_VAR_node_type }},git_url=${{ vars.git_url }}" -t prod
         name: "Deploy Bundle in prod"
         working-directory: .
         env:
