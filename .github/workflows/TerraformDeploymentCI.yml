@@ -37,7 +37,7 @@ jobs:
       DATABRICKS_HOST: ${{ vars.DATABRICKS_HOST }}
       ARM_SUBSCRIPTION_ID: ${{ vars.SUBSCRIPTION_ID }}
       ARM_ACCESS_KEY: ${{ secrets.ARM_ACCESS_KEY }}
-      git_url: ${{ vars.git_url }}
+      TF_VAR_git_url: ${{ vars.git_url }}
     steps:
       # Check out this repo, so that this workflow can access it.
       - uses: actions/checkout@v3
