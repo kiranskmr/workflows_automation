@@ -8,12 +8,8 @@
 # }
 
 
-resource "random_string" "azurerm_key_vault_name" {
-  length  = 13
-  lower   = true
-  numeric = false
-  special = false
-  upper   = false
+resource "random_id" "names" {
+  byte_length = 8
 }
 
 locals {
@@ -21,7 +17,7 @@ locals {
 }
 
 resource "azurerm_key_vault" "vault" {
-  name                       = replace("${lower(data.azuread_user.current_user.mail_nickname)}akv",".","")
+  name                       = "tfkv${lower(random_id.names.hex)}"
   location                   = azurerm_resource_group.resource_group.location
   resource_group_name        = azurerm_resource_group.resource_group.name
   tenant_id                  = data.azurerm_client_config.current.tenant_id

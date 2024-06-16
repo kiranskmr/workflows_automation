@@ -1,3 +1,5 @@
+variable "git_url" {}
+
 # import dlt module
 module "dlt-pipeline" {
   source = "../../modules/dlt-pipeline"
@@ -24,6 +26,7 @@ module "dbt-pipeline" {
   warehouse_id = module.sql-warehouse.warehouse_id
   pipeline_id = module.dlt-pipeline.pipeline_id
   job_name= "Test Terraform - Customer Order Details - DBT job"
+  git_url = "${var.git_url}"
 
 
  
@@ -34,7 +37,7 @@ module "wheel-job" {
 source = "../../modules/wheel-job"
 volume_catalog = "test"
 job_name_whl = "Test Terraform - Python whl File from Volume job"
-
+git_url = "${var.git_url}"
 }
 
 
@@ -47,5 +50,6 @@ job_name_feature ="Test Terraform - MLOPS Write feature table job"
 env ="test"
 experiment_name="${data.databricks_current_user.me.home}/tf-test-mlops-experiment"
 model_name="tf-mlops_model"
+git_url = "${var.git_url}"
 }
 

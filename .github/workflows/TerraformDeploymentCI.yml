@@ -37,6 +37,7 @@ jobs:
       DATABRICKS_HOST: ${{ vars.DATABRICKS_HOST }}
       ARM_SUBSCRIPTION_ID: ${{ vars.SUBSCRIPTION_ID }}
       ARM_ACCESS_KEY: ${{ secrets.ARM_ACCESS_KEY }}
+      TF_VAR_git_url: ${{ vars.git_url }}
     steps:
       # Check out this repo, so that this workflow can access it.
       - uses: actions/checkout@v3
@@ -56,14 +57,14 @@ jobs:
         uses: hashicorp/setup-terraform@v3   
 
       - name: terraform init
-        run: terraform init -backend-config="storage_account_name=$STORAGE_ACCOUNT" -backend-config="container_name=$CONTAINER_NAME" -backend-config="resource_group_name=$RESOURCE_GROUP" -backend-config="key=testtf.terraform.tfstate"
+        run: terraform init   -backend-config="storage_account_name=$STORAGE_ACCOUNT" -backend-config="container_name=$CONTAINER_NAME" -backend-config="resource_group_name=$RESOURCE_GROUP" -backend-config="key=testtf.terraform.tfstate"
         working-directory: terraform/environments/test/
 
       - name: terraform fmt
         run: terraform fmt
         working-directory: terraform/environments/test/
-      - name: terraform validate
-        run: terraform validate
+      - name: terraform validate 
+        run: terraform validate 
         working-directory: terraform/environments/test/
       - name: terraform plan
         run: terraform plan -lock=false
@@ -84,8 +85,9 @@ jobs:
       DATABRICKS_HOST: ${{ vars.DATABRICKS_HOST }}
       ARM_SUBSCRIPTION_ID: ${{ vars.SUBSCRIPTION_ID }}
       ARM_ACCESS_KEY: ${{ secrets.ARM_ACCESS_KEY }}
+      TF_VAR_git_url: ${{ vars.git_url }}
     steps:
-      # Check out this repo, so that this workflow can access it.
+      # Check out this repo, so that this workflow can access it
       - uses: actions/checkout@v3
       - name: setup python
         uses: actions/setup-python@v4
@@ -103,17 +105,17 @@ jobs:
         uses: hashicorp/setup-terraform@v3   
 
       - name: terraform init
-        run: terraform init -backend-config="storage_account_name=$STORAGE_ACCOUNT" -backend-config="container_name=$CONTAINER_NAME" -backend-config="resource_group_name=$RESOURCE_GROUP" -backend-config="key=prodtf.terraform.tfstate"
+        run: terraform init  -backend-config="storage_account_name=$STORAGE_ACCOUNT" -backend-config="container_name=$CONTAINER_NAME" -backend-config="resource_group_name=$RESOURCE_GROUP" -backend-config="key=prodtf.terraform.tfstate"
         working-directory: terraform/environments/prod/
 
       - name: terraform fmt
         run: terraform fmt
         working-directory: terraform/environments/prod/
       - name: terraform validate
-        run: terraform validate
+        run: terraform validate 
         working-directory: terraform/environments/prod/
       - name: terraform plan
-        run: terraform plan -lock=false
+        run: terraform plan -lock=false 
         working-directory: terraform/environments/prod/
 
 

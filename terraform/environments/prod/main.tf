@@ -1,3 +1,5 @@
+variable "git_url" {}
+
 # import dlt module
 module "dlt-pipeline" {
   source = "../../modules/dlt-pipeline"
@@ -24,7 +26,7 @@ module "dbt-pipeline" {
   warehouse_id = module.sql-warehouse.warehouse_id
   pipeline_id = module.dlt-pipeline.pipeline_id
   job_name= "Terraform - Customer Order Details - DBT job"
-
+  git_url = "${var.git_url}"
 
  
 }
@@ -34,6 +36,7 @@ module "wheel-job" {
 source = "../../modules/wheel-job"
 volume_catalog = "prod"
 job_name_whl = "Terraform - Python whl File from Volume job"
+git_url = "${var.git_url}"
 
 }
 

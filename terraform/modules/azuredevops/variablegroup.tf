@@ -10,13 +10,9 @@ resource "azuredevops_variable_group" "variable_group" {
      value = azurerm_storage_account.storage_account.primary_access_key
   }
 
-  variable {
-    name  = "BUNDLE_TARGET"
-    value = "dev"
-  }
 
   variable {
-    name = "DATABRICKS_CLUSTER_ID"
+    name = "TEST_CLUSTER_ID"
     value = databricks_cluster.cluster.id
   }
 
@@ -25,10 +21,6 @@ resource "azuredevops_variable_group" "variable_group" {
     value = ""
   }
 
-   variable {
-    name = "databricks_token"
-    value = ""
-  }
 
   variable {
     name = "BUNDLE_VAR_warehouse_id"
@@ -51,4 +43,40 @@ resource "azuredevops_variable_group" "variable_group" {
     name = "storage_account_name"
     value = azurerm_storage_account.storage_account.name
   }
+
+    variable {
+    name = "STAGING_AZURE_SP_APPLICATION_ID"
+    value = ""
+  }
+
+    variable {
+    name = "STAGING_AZURE_SP_CLIENT_SECRET"
+    value = ""
+  }
+
+    variable {
+    name = "STAGING_AZURE_SP_TENANT_ID"
+    value = ""
+  }
+
+    variable {
+    name = "PROD_AZURE_SP_TENANT_ID"
+    value = ""
+  }
+
+    variable {
+    name = "PROD_AZURE_SP_CLIENT_SECRET"
+    value = ""
+  }
+
+    variable {
+    name = "PROD_AZURE_SP_APPLICATION_ID"
+    value = ""
+  }
+    variable {
+    name = "git_url"
+    value = ""
+  }
 }
+
+

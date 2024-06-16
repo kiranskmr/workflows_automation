@@ -38,6 +38,7 @@ jobs:
       DATABRICKS_HOST: ${{ vars.DATABRICKS_HOST }}
       ARM_SUBSCRIPTION_ID: ${{ vars.SUBSCRIPTION_ID }}
       ARM_ACCESS_KEY: ${{ secrets.ARM_ACCESS_KEY }}
+      TF_VAR_git_url: ${{ vars.git_url }}
     steps:
       # Check out this repo, so that this workflow can access it.
       - uses: actions/checkout@v3
@@ -95,6 +96,7 @@ jobs:
       DATABRICKS_HOST: ${{ vars.DATABRICKS_HOST }}
       ARM_SUBSCRIPTION_ID: ${{ vars.SUBSCRIPTION_ID }}
       ARM_ACCESS_KEY: ${{ secrets.ARM_ACCESS_KEY }}
+      TF_VAR_git_url: ${{ vars.git_url }}
     steps:
       # Check out this repo, so that this workflow can access it.
       - uses: actions/checkout@v3
@@ -121,7 +123,7 @@ jobs:
         run: terraform fmt
         working-directory: terraform/environments/prod/
       - name: terraform validate
-        run: terraform validate
+        run: terraform validate 
         working-directory: terraform/environments/prod/
       - name: terraform plan
         run: terraform plan -lock=false

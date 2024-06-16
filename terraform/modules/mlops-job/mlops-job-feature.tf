@@ -1,6 +1,7 @@
-
-
-
+variable "git_url" {
+  description = "git URL"
+  type        = string
+}
 
 variable "job_name_feature" {
   description = "A name for the job."
@@ -64,7 +65,7 @@ resource "databricks_job" "this" {
 
 
   git_source {
-    url      = "https://github.com/kiranskmr/workflows_automation.git"
+    url      = var.git_url
     provider = "gitHub"
     branch   = "main"
   }
