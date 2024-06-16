@@ -5,7 +5,7 @@ resource "azuredevops_git_repository" "dabpipeline" {
   initialization {
     init_type   = "Import"
     source_type = "Git"
-    source_url  = "https://github.com/kiranskmr/workflows_automation/"
+    source_url  = "https://github.com/${var.repo_name}"
   }
 
 }
@@ -23,7 +23,7 @@ resource "azuredevops_build_definition" "dabpipelinebuild" {
     repo_type             = "TfsGit"
     repo_id               = azuredevops_git_repository.dabpipeline.id 
     branch_name           = "main"
-    yml_path              = "azure-pipelines-dab.yml"
+    yml_path              = ".azure/azure-pipelines-dab.yml"
   }
  variable_groups = [azuredevops_variable_group.variable_group.id]
   schedules {

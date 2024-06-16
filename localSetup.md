@@ -115,3 +115,16 @@ terraform validate
 terraform plan
 terraform apply
 ```     
+
+
+
+### Run unit test cases locally
+
+install databricks connect if not installed already
+
+
+```
+pip install databricks-connect
+databricks-connect configure
+DATABRICKS_CLUSTER_ID=<cluster id> pytest src
+```

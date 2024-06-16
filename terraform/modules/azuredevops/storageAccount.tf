@@ -8,16 +8,16 @@ data "azuread_user" "current_user" {
 
 
 resource "azurerm_resource_group" "resource_group" {
-  name     = replace("${lower(data.azuread_user.current_user.mail_nickname)}arg",".","")
+  name     = "tfrg${lower(random_id.names.hex)}"
   location = "uksouth"
    tags = {
-    removeAfter = "2024-12-31",
+    removeAfter = "2026-12-31",
     owner = data.azuread_user.current_user.user_principal_name
   }
 }
 
 resource "azurerm_storage_account" "storage_account" {
-  name                     = replace("${lower(data.azuread_user.current_user.mail_nickname)}asa",".","")
+  name                     = "tfsa${lower(random_id.names.hex)}"
   resource_group_name      = azurerm_resource_group.resource_group.name
   location                 = azurerm_resource_group.resource_group.location
   account_tier             = "Standard"
