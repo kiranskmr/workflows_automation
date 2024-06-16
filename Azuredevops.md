@@ -1,4 +1,4 @@
-## Set up Azure Devops project and pipeline
+## Set up Azure Devops project and pipeline set up using terraform
 
 
 
@@ -10,22 +10,20 @@ eg org URL: https://dev.azure.com/kiransreekumar/
 click on the user settings icon on the top right and personal access tokens.
 
 New token -> Give a name and expiration and choose a scope.Make a note of the token and save it securely.
-Generate an SSh public key from your laptop. 
-
-```ssh-keygen -t rsa```
-
-Copy the generated public key from the generated file and add it to the user settings -> SSH Public Keys in azure devops.
 
 
-![Add ssh key](images/ssh-azure.png)
-
-
-Add the below environment variables
+Add the below environment variables in you local development IDE.
 
 ```
 export AZDO_ORG_SERVICE_URL=https://dev.azure.com/<your azure devops org name>
 export AZDO_PERSONAL_ACCESS_TOKEN=<add your azure devops token>
 ```
+
+
+create a github token from github developer settings.
+
+
+export GITHUB_TOKEN=<your github token>
 
 ### Install azure cli 
 
@@ -46,8 +44,8 @@ run terraform commands to create the devops pipeline.
 
 ```
 cd terraform/modules/azuredevops
-terraform plan
-terraform apply
+terraform plan -var git_url=<https://github.com/kiranskmr/workflows_automation>
+terraform apply -var -var git_url=<https://github.com/kiranskmr/workflows_automation>
 ```
  
 This will create  an azure devops pipeline , a variable group and storage account for terraform backend.
