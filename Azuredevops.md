@@ -67,16 +67,19 @@ terraform apply -var -var git_url=<https://github.com/kiranskmr/workflows_automa
 ![Devops Pipeline](images/pipeline.png)
 
  
-
+```
 Update the variable group with the required properties.
 
 
 databricks_host 
 BUNDLE_VAR_node_type i3.xlarge for AWS / Standard_DS3_v2 for Azure/ n1-standard-4 for gcp
+
 git_url = Add your Git URL here <https://github.com/kiranskmr/workflows_automation/>
 
-The below is the service principal details which needs to be added. The service principal needs to be given all grants on the catalogs, dev,test and prod in Unity catalog.
-The service principal should also be added to the workspace and given access to the compute created like the sql warehouse and the cluster.
+The below is the service principal details which needs to be added.
+The service principal needs to be given all grants on the catalogs, dev,test and prod in Unity catalog.
+The service principal should also be added to the workspace and given access to the 
+compute created like the sql warehouse and the cluster.
 
 PROD_AZURE_SP_APPLICATION_ID
 PROD_AZURE_SP_CLIENT_SECRET
@@ -84,7 +87,7 @@ PROD_AZURE_SP_TENANT_ID
 STAGING_AZURE_SP_APPLICATION_ID
 STAGING_AZURE_SP_CLIENT_SECRET
 STAGING_AZURE_SP_TENANT_ID
-
+```
 
 ![Variable Group](images/variable.png)
 
