@@ -26,7 +26,7 @@ jobs:
   stagingbuild:
     name: "Terraform plan in test"
     runs-on: ubuntu-latest
-    environment: dev
+    environment: test
     env:
       ARM_CLIENT_ID: ${{ vars.CLIENT_ID }}
       ARM_CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
@@ -74,7 +74,7 @@ jobs:
   prodbuild:
     name: "Terraform plan in prod"
     runs-on: ubuntu-latest
-    environment: dev
+    environment: prod
     env:
       ARM_CLIENT_ID: ${{ vars.CLIENT_ID }}
       ARM_CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
