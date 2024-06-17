@@ -27,7 +27,7 @@ jobs:
     if: github.ref == 'refs/heads/main'
     name: "Terraform deploy in Test"
     runs-on: ubuntu-latest
-    environment: dev
+    environment: test
     env:
       ARM_CLIENT_ID: ${{ vars.CLIENT_ID }}
       ARM_CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
@@ -85,7 +85,7 @@ jobs:
     if: github.ref == 'refs/heads/release'
     name: "Terraform deploy in Prod"
     runs-on: ubuntu-latest
-    environment: dev
+    environment: prod
     env:
       ARM_CLIENT_ID: ${{ vars.CLIENT_ID }}
       ARM_CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
