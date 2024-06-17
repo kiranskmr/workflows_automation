@@ -26,7 +26,7 @@ jobs:
   deploy:
     name: "Run Unit Test Cases"
     runs-on: ubuntu-latest
-    environment: dev
+    environment: test
     steps:
       # Check out this repo, so that this workflow can access it.
       - uses: actions/checkout@v3

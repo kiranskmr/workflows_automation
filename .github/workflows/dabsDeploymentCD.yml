@@ -27,7 +27,7 @@ jobs:
     if: github.ref == 'refs/heads/main'
     name: "Deploy Bundle in test"
     runs-on: ubuntu-latest
-    environment: dev
+    environment: test
     steps:
       # Check out this repo, so that this workflow can access it.
       - uses: actions/checkout@v3
@@ -84,7 +84,7 @@ jobs:
     if: github.ref == 'refs/heads/release'
     name: "Deploy Bundle in Prod"
     runs-on: ubuntu-latest
-    environment: dev
+    environment: prod
     steps:
       # Check out this repo, so that this workflow can access it.
       - uses: actions/checkout@v3
