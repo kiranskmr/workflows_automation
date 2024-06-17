@@ -59,5 +59,5 @@ databricks_host
 databricks_token
 BUNDLE_VAR_node_type i3.xlarge for AWS / Standard_DS3_v2 for Azure/ n1-standard-4 for gcp
 
-![Variable Group](images/vargroup.png)
+![Variable Group](images/variable.png)
 
