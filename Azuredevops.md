@@ -91,3 +91,36 @@ STAGING_AZURE_SP_TENANT_ID
 
 ![Variable Group](images/variable.png)
 
+
+```
+Update Azure devops to enable the automated builds.
+
+
+Open the pipeline and click edit and triggers.
+```
+
+![Edit pipeline](images/edit.png)
+
+
+```
+In the YAML tab update the Get Sources to point to GitHub from Azure Repos Git 
+and provide the 
+
+Repository <kiranskmr/workflows_automation>
+Default branch for manual and scheduled builds <main>
+
+
+```
+
+![Sources](images/source.png)
+
+
+```
+
+In the Triggers tab click "Override the YAML pull request trigger from here"
+
+and enable pull request validation
+
+```
+
+![PR validation](images/prvalidation.png)
