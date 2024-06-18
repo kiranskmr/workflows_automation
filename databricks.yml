@@ -76,6 +76,7 @@ targets:
       dlt_catalog: prod
       dlt_schema: dlt
       dbt_schema: dbt
+      experiment_name: /Shared/${bundle.target}-mlops-experiment
     workspace:
       root_path: /Shared/.bundle/prod/${bundle.name}
     resources:
