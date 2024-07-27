@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "data"
+version = "0.0.1"
+description = "Python wheel file bult using poetry"
+authors = ["Kiran <Sreekumarkiran.sreekumar@databricks.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+main = "data.__main__:main"

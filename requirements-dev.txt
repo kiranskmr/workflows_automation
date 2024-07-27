@@ -1,0 +1,8 @@
+--extra-index-url https://databricks.github.io/workflows-authoring-toolkit
+workflows_authoring_toolkit==0.4.2
+packaging>=23
+setuptools
+requests
+cowsay==5.0.0
+wheel
+-e .

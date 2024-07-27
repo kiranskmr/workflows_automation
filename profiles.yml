@@ -1,0 +1,19 @@
+default:
+  target: dev
+  outputs:
+    dev:
+      catalog: '{{ env_var(''DBT_CATALOG'') }}'
+      host: '{{ env_var(''DATABRICKS_HOST'') }}'
+      http_path: '{{ env_var(''DBT_HTTP_PATH'') }}'
+      schema: '{{ env_var(''DBT_SCHEMA'') }}'
+      threads: 8
+      token: '{{ env_var(''DATABRICKS_TOKEN'') }}'
+      type: databricks
+    local:
+      catalog: '{{ env_var(''DBT_CATALOG'') }}'
+      host: '{{ env_var(''DATABRICKS_HOST'') }}'
+      http_path: '{{ env_var(''DBT_HTTP_PATH'') }}'
+      schema: '{{ env_var(''DBT_SCHEMA'') }}'
+      threads: 8
+      token: '{{ env_var(''DATABRICKS_TOKEN'') }}'
+      type: databricks

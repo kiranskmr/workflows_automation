@@ -1,0 +1,49 @@
+
+permissions:
+  - level: CAN_VIEW
+    group_name: users
+
+resources:
+  jobs:
+    batch_inference_job:
+      name: DABS - MLOPS Batch inference job
+
+      tasks:
+        - task_key: batch_inference_job
+          job_cluster_key: infer_job_cluster
+          notebook_task:
+            notebook_path: ../deployment/batch_inference/notebooks/BatchInference.py
+            base_parameters:
+              env: ${bundle.target}
+              input_table_name: ${bundle.target}.mlops.feature_store_inference_input  # TODO: create input table for inferences
+              output_table_name: ${bundle.target}.mlops.predictions
+              model_name: ${bundle.target}.mlops.${var.model_name}
+              # git source information of current ML resource deployment. It will be persisted as part of the workflow run
+              git_source_info: url:${bundle.git.origin_url}; branch:${bundle.git.branch}; commit:${bundle.git.commit}
+
+      job_clusters:
+        - job_cluster_key: infer_job_cluster
+          new_cluster:
+            spark_version: ${var.spark_version_ml}
+            node_type_id: ${var.node_type}
+            custom_tags:
+              ResourceClass: MultiNode
+            spark_env_vars:
+              PYSPARK_PYTHON: /databricks/python3/bin/python3
+            data_security_mode: SINGLE_USER
+            num_workers: 1
+
+      schedule:
+        quartz_cron_expression: "0 0 11 * * ?" # daily at 11am
+        timezone_id: UTC
+      # If you want to turn on notifications for this job, please uncomment the below code block,
+      # and provide a list of emails to the on_failure argument.
+      #
+      #  email_notifications:
+      #    on_failure:
+      #      - first@company.com
+      #      - second@company.com
+
+      tags:
+        env: ${bundle.target}
+        source: DABS

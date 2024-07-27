@@ -1,0 +1,62 @@
+variables:
+  volume_catalog:
+    description: Volume Catalog to use
+    default: ${bundle.target}
+  volume_schema:
+    description: Volume schema to use
+    default: wine
+  pii_volume_schema:
+    description: Volume schema to use for PII data
+    default: pii
+  volume_job:
+    description: volume script
+    default: databricks_notebooks/Volume
+  dbt_catalog:
+    description: Catalog to use
+    default: ${bundle.target}
+  dlt_catalog:
+    description: Catalog to use
+    default: ${bundle.target}
+  node_type:
+    description: Node Type
+    default: Standard_DS3_v2  
+  dbt_schema:
+    description: Schema to use
+    default: dbt
+  dlt_schema:
+    description: Schema to use
+    default: dlt
+  warehouse_id:
+    description: Databricks SQL warehouse to use
+  git_branch:
+    description: Git brach to use
+    default: main
+  spark_version:
+    description: Git brach to use
+    default: 15.1.x-scala2.12
+  spark_version_ml:
+    description: Git brach to use
+    default: 13.3.x-cpu-ml-scala2.12
+  host:
+    description: Workspace host
+    default: https://adb-984752964297111.11.azuredatabricks.net/
+  initial_job:
+    description: Initial Job path
+    default: databricks_notebooks/Initial_Setup
+  security_job:
+    description: security Job path
+    default: databricks_notebooks/Security
+  git_url:
+    description: Git URl
+  job_prefix:
+    description: A unifying prefix for this bundle's job and task names.
+    default: wheel
+  wheeljob:
+    description: wheel job script
+    default: databricks_notebooks/dabdemo_notebook
+  experiment_name:
+    description: Experiment name for the model training.
+    default: /Users/${workspace.current_user.userName}/${bundle.target}-mlops-experiment
+  model_name:
+    description: Model name for the model training.
+    default: ${bundle.target}_mlops_model

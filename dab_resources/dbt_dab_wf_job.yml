@@ -1,0 +1,97 @@
+
+
+resources:
+  jobs:
+    dbt_dss_job:
+      name: DABS - Customer Order Details - DBT job
+      format: MULTI_TASK
+      permissions:
+        - group_name: users
+          level: CAN_MANAGE
+      tasks:
+
+        - task_key: Set-up-UC-Catalog-and-Schema
+          job_cluster_key: dab_shared_cluster
+          notebook_task:
+            base_parameters:
+              dbt_catalog: ${var.dbt_catalog}
+              dbt_schema: ${var.dbt_schema}
+              dlt_catalog: ${var.dlt_catalog}
+              dlt_schema: ${var.dlt_schema}
+              volume_schema: ${var.volume_schema}
+              pii_volume_schema: ${var.pii_volume_schema}
+            notebook_path: ${var.initial_job}
+            source: GIT
+
+
+        - task_key: DBT-Ingest-customer-data-and-transformation
+          depends_on:
+          - task_key: Set-up-UC-Catalog-and-Schema
+          run_if: ALL_SUCCESS
+          dbt_task:
+            project_directory: ""
+            commands:
+              - dbt deps
+              - dbt build
+            warehouse_id: ${var.warehouse_id} 
+            catalog: ${var.dbt_catalog}
+            schema: ${var.dbt_schema}
+          job_cluster_key: dab_shared_cluster
+          libraries:
+            - pypi:
+                package: dbt-databricks>=1.0.0,<2.0.0
+
+        - task_key: Assigning-UC-masking-and-filtering-funtions
+          depends_on:
+          - task_key: DBT-Ingest-customer-data-and-transformation
+          job_cluster_key: dab_shared_cluster
+          notebook_task:
+            base_parameters:
+              dbt_catalog: ${var.dbt_catalog}
+              dbt_schema: ${var.dbt_schema}
+              dlt_catalog: ${var.dlt_catalog}
+              dlt_schema: ${var.dlt_schema}
+            notebook_path: ${var.security_job}
+            source: GIT
+
+        - task_key: DLT-Ingest-customer-data-and-transformation
+          depends_on:
+          - task_key: Set-up-UC-Catalog-and-Schema
+          pipeline_task:
+            pipeline_id: ${resources.pipelines.dlt_sales_pipeline.id}
+
+
+        - task_key: VOLUME-Ingest-Data
+          depends_on:
+          - task_key: Set-up-UC-Catalog-and-Schema
+          job_cluster_key: dab_shared_cluster
+          notebook_task:
+            base_parameters:
+              volume_catalog: ${var.volume_catalog}
+              volume_schema: ${var.volume_schema}
+              pii_volume_schema: ${var.pii_volume_schema}
+            notebook_path: ${var.volume_job}
+            source: GIT
+
+           
+      job_clusters:
+        - job_cluster_key: dab_shared_cluster
+          new_cluster:
+            spark_version: ${var.spark_version}
+            node_type_id: ${var.node_type}
+            custom_tags:
+              ResourceClass: MultiNode
+            spark_env_vars:
+              PYSPARK_PYTHON: /databricks/python3/bin/python3
+            data_security_mode: USER_ISOLATION
+            num_workers: 1
+
+
+      git_source:
+            git_url: ${var.git_url}
+            git_provider: gitHub
+            git_branch: main
+        
+      tags:
+        env: ${bundle.target}
+        source: DABS

@@ -1,0 +1,88 @@
+# This is a Databricks asset bundle definition for my_dabs.
+# See https://docs.databricks.com/dev-tools/bundles/index.html for documentation.
+bundle:
+  name: workflow_automation
+
+include:
+  - dab_resources/*.yml
+  - resources/__generated__/*.yml
+
+#sync:
+#  exclude:
+#    - "resources"
+
+experimental:
+  scripts:
+    preinit:
+      /bin/bash generate-resources.sh --where src --include 'jobs' 
+artifacts:
+   setuptools-wheel:
+     type: whl
+     path: ./    
+
+  # poetry-wheel:
+  #   type: whl
+  #   build: poetry build
+  #   path: ./      
+
+
+targets:
+  # The 'dev' target, used for development purposes.
+  # Whenever a developer deploys using 'dev', they get their own copy.
+  dev:
+    # We use 'mode: development' to make sure everything deployed to this target gets a prefix
+    # like '[dev my_user_name]'. Setting this mode also disables any schedules and
+    # automatic triggers for jobs and enables the 'development' mode for Delta Live Tables pipelines.
+    mode: development
+    default: true
+    variables:
+      dbt_catalog: dev
+      dlt_catalog: dev
+      dlt_schema: dlt
+      dbt_schema: dbt
+    resources:
+      jobs:
+        dbt_dss_job:
+          git_source:
+            git_provider: gitHub
+            git_branch: main
+
+  test:
+    mode: development
+    variables:
+      dbt_catalog: test
+      dlt_catalog: test
+      dlt_schema: dlt
+      dbt_schema: dbt
+    resources:
+      jobs:
+        dbt_dss_job:
+          git_source:
+            git_provider: gitHub
+            git_branch: main
+
+
+
+
+  # The 'prod' target, used for production deployment.
+  prod:
+    # For production deployments, we only have a single copy, so we override the
+    # workspace.root_path default of
+    # /Users/${workspace.current_user.userName}/.bundle/${bundle.target}/${bundle.name}
+    # to a path that is not specific to the current user.
+    mode: production
+    variables:
+      dbt_catalog: prod
+      dlt_catalog: prod
+      dlt_schema: dlt
+      dbt_schema: dbt
+      experiment_name: /Shared/${bundle.target}-mlops-experiment
+    workspace:
+      root_path: /Shared/.bundle/prod/${bundle.name}
+    resources:
+      jobs:
+        dbt_dss_job:
+          git_source:
+            git_provider: gitHub
+            git_branch: release
+    

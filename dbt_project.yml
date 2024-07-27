@@ -1,0 +1,33 @@
+name: 'dbsql_dbt_tpch'
+version: '1.0.0'
+config-version: 2
+
+profile: 'default'
+
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+target-path: "target"
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+vars:
+  max_ship_date: "'1998-12-01'"
+
+dispatch:
+ - macro_namespace: dbt_utils
+   search_order: ['dbt_project_evaluator','dbsql_dbt_tpch','spark_utils', 'dbt_utils']
+
+# models:
+#  dbt_artifacts:
+#    +database: sales_dbt 
+#    +schema: artifacts
+#  +persist_docs:
+#     relation: true
+#     columns: true
+

@@ -1,0 +1,32 @@
+
+resources:
+  pipelines:
+    dlt_sales_pipeline:
+      name: DABS -  Customer Order Details - DLT job
+      libraries:
+        - notebook:
+            path: ../databricks_notebooks/DLT-base_tables.sql
+        - notebook:
+            path: ../databricks_notebooks/DLT-ODS_tables.sql
+        - notebook:
+            path: ../databricks_notebooks/DLT-WH_tables.sql    
+
+      configuration:
+        "bundle.environment": "${bundle.environment}"
+
+      permissions:
+        - level: CAN_MANAGE
+          group_name: users
+      
+      catalog: ${var.dlt_catalog}
+      target: dlt
+
+      clusters:
+            - label: default
+              autoscale:
+                min_workers: 1
+                max_workers: 8
+                mode: ENHANCED
+      continuous: false
+      channel: CURRENT
+  
