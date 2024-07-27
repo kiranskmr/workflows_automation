@@ -1,0 +1,54 @@
+
+# This workflow validates, deploys, and runs the specified bundle
+# within a pre-production target named "qa".
+name: "Unit testing"
+
+# Ensure that only a single job or workflow using the same concurrency group
+# runs at a time.
+concurrency:
+  group: test
+  cancel-in-progress: true
+# Trigger this workflow whenever a pull request is opened against the repo's
+# main branch or an existing pull request's head branch is updated.
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+    branches:
+      - main
+    paths: ['src/**','databricks_notebooks/**','dab_resources/**']
+
+jobs:
+  # Used by the "pipeline_update" job to deploy the bundle.
+  # Bundle validation is automatically performed as part of this deployment.
+  # If validation fails, this workflow fails.
+  deploy:
+    name: "Run Unit Test Cases"
+    runs-on: ubuntu-latest
+    environment: test
+    steps:
+      # Check out this repo, so that this workflow can access it.
+      - uses: actions/checkout@v3
+      - name: setup python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11' # install the python version needed
+
+      # Download the Databricks CLI.
+      # See https://github.com/databricks/setup-cli
+      - uses: databricks/setup-cli@main
+
+      - run: python -m pip install --upgrade pip
+
+      - run: pip install pytest pyspark databricks-connect
+
+      # Deploy the bundle to the "qa" target as defined
+      # in the bundle's settings file.
+      - run: DATABRICKS_CLUSTER_ID=${{ vars.TEST_CLUSTER_ID }} pytest src/tests
+        working-directory: .
+        env:
+          DATABRICKS_HOST: ${{ vars.DATABRICKS_HOST }}
+          ARM_TENANT_ID: ${{ vars.TENANT_ID }}
+          ARM_CLIENT_ID: ${{ vars.CLIENT_ID }}
+          ARM_CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
