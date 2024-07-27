@@ -1,4 +1,4 @@
-# Filename: addcol.py  test data
+# Filename: addcol.py  test dataset
 import pyspark.sql.functions as F
 
 def with_status(df):
