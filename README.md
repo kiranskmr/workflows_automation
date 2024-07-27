@@ -13,7 +13,7 @@ There are different ways you can automate the workflows deployments.
 - Python SDK
 - Rest API
 
-The repo contains examples of automating your workflows using
+The repo contains examples of automating your Databricks workflows using
 
 ([Databricks Asset Bundles](https://docs.databricks.com/en/dev-tools/bundles/index.html))
 
