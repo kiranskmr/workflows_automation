@@ -77,7 +77,7 @@ jobs:
         name: "Install Wheel"
       - run: python3 setup.py bdist_wheel
         name: "Build wheel file"
-      - run: databricks fs cp ${{ github.workspace }}/dist/*.whl dbfs:/Volumes/test/wheel/wheel_volume --overwrite
+      - run: databricks fs cp ${{ github.workspace }}/dist/*.whl dbfs:/Volumes/test/wheel_tf/wheel_volume --overwrite
         name: "Copy whl to volumes"
 
 
@@ -135,7 +135,7 @@ jobs:
         name: "Install Wheel"
       - run: python3 setup.py bdist_wheel
         name: "Build wheel file"
-      - run: databricks fs cp ${{ github.workspace }}/dist/*.whl dbfs:/Volumes/prod/wheel/wheel_volume --overwrite
+      - run: databricks fs cp ${{ github.workspace }}/dist/*.whl dbfs:/Volumes/prod/wheel_tf/wheel_volume --overwrite
         name: "Copy whl to volumes"
 
 
