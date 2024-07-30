@@ -1,4 +1,4 @@
-# This is a Databricks asset bundle definition for my_dabs.
+# This is a Databricks asset bundle definition for workflow_automation.
 # See https://docs.databricks.com/dev-tools/bundles/index.html for documentation.
 bundle:
   name: workflow_automation
@@ -34,6 +34,8 @@ targets:
     # like '[dev my_user_name]'. Setting this mode also disables any schedules and
     # automatic triggers for jobs and enables the 'development' mode for Delta Live Tables pipelines.
     mode: development
+    workspace:
+      host: https://adb-365805097001262.2.azuredatabricks.net/
     default: true
     variables:
       dbt_catalog: dev
