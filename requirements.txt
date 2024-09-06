@@ -37,9 +37,3 @@ workflows_authoring_toolkit==0.4.2
 setuptools
 wheel
 poetry
-mlflow
-scikit-learn>
-matplotlib>
-pillow>
-Jinja2
-pyspark
