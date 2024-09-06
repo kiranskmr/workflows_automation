@@ -1,5 +1,5 @@
 resource "databricks_catalog" "catalog_dev" {
-  name    = "dev"
+  name    = "dev_sanjeev"
   comment = "this catalog is used for dev"
   properties = {
     purpose = "dev env"
@@ -7,7 +7,7 @@ resource "databricks_catalog" "catalog_dev" {
 }
 
 resource "databricks_catalog" "catalog_test" {
-  name    = "test"
+  name    = "test_sanjeev"
   comment = "this catalog is used for test"
   properties = {
     purpose = "test env"
@@ -15,7 +15,7 @@ resource "databricks_catalog" "catalog_test" {
 }
 
 resource "databricks_catalog" "catalog_prod" {
-  name    = "prod"
+  name    = "prod_sanjeev"
   comment = "this catalog is used for prod"
   properties = {
     purpose = "prod env"
