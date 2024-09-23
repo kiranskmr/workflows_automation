@@ -1,15 +1,9 @@
 
 
-common_permissions: 
-  permissions:
-    - level: CAN_VIEW
-      group_name: users
-
 resources:
   jobs:
     model_training_job:
       name: DABS - MLOPS Model training job
-      job_cluster_key: model_training_job_cluster
       tasks:
         - task_key: Train
           job_cluster_key: model_training_job_cluster
