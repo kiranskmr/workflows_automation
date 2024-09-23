@@ -1,0 +1,23 @@
+resources:
+  jobs:
+    DABS_Serverless_Python_Script_w_Environment:
+      name: DABS - Serverless Python Script w/ Environment
+      tasks:
+        - task_key: whl_file_environment
+          spark_python_task:
+            python_file: ../databricks_notebooks/python_serverless_task.py
+          environment_key: whl_file_environment_environment
+      queue:
+        enabled: true
+      environments:
+        - environment_key: Default
+          spec:
+            client: "1"
+        - environment_key: whl_file_environment_environment
+          spec:
+            client: "1"
+            dependencies:
+              - "/Volumes/${bundle.target}/wheel/wheel_volume/data-0.0.1-py3-none-any.whl"
+      tags:
+        env: ${bundle.target}
+        source: DABS

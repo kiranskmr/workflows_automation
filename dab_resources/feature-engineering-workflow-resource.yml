@@ -1,11 +1,4 @@
 
-common_permissions: 
-  permissions:
-    - level: CAN_VIEW
-      group_name: users
-
-
-
 resources:
   jobs:
     write_feature_table_job:
