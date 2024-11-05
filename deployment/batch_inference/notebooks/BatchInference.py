@@ -27,8 +27,7 @@ dbutils.widgets.text("input_table_name", "", label="Input Table Name")
 # Delta table to store the output predictions.
 dbutils.widgets.text("output_table_name", "", label="Output Table Name")
 # Unity Catalog registered model name to use for the trained mode.
-dbutils.widgets.text(
-)
+dbutils.widgets.text("model_name", "", label="Full (Three-Level) Model Name")
 
 # COMMAND ----------
 
