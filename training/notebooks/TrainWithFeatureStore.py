@@ -1,5 +1,5 @@
 # Databricks notebook source
-##################################################################################
+###################################################################################
 # Model Training Notebook using Databricks Feature Store
 #
 # This notebook shows an example of a Model Training pipeline using Databricks Feature Store tables.
