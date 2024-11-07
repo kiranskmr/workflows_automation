@@ -10,7 +10,7 @@ from pytz import timezone
 @F.udf(returnType=IntegerType())
 def _is_weekend(dt):
     tz = "America/New_York"
-    return int(dt.astimezone(timezone(tz)).weekday() >= 5)  # 5 = Saturday, 6 = Sunday
+    return int(dt.astimezone(timezone(tz)).weekday() >= 5)  # 5 = Saturday, 6 = Sunday Monday
 
 
 @F.udf(returnType=StringType())
