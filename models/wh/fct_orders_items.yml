@@ -135,3 +135,12 @@ models:
             description: total amount after discounts and taxes
             tests:
                 - not_null
+
+          - name: customer_key
+            description: reference to customer dimension
+
+          - name: dbt_batch_id
+            description: dbt invocation ID for tracking data lineage
+
+          - name: dbt_batch_ts
+            description: timestamp when dbt batch was run
