@@ -57,7 +57,32 @@ final as (
                 o.supplier_key = ps.supplier_key
 )
 select 
-    f.*,
+    f.order_item_key,
+    f.order_key,
+    f.order_date,
+    f.customer_key,
+    f.order_status_code,
+    f.part_key,
+    f.supplier_key,
+    f.return_status_code,
+    f.order_line_number,
+    f.order_line_status_code,
+    f.ship_date,
+    f.commit_date,
+    f.receipt_date,
+    f.ship_mode_name,
+    f.supplier_cost_amount,
+    f.base_price,
+    f.discount_percentage,
+    f.discounted_price,
+    f.tax_rate,
+    f.order_item_count,
+    f.quantity,
+    f.gross_item_sales_amount,
+    f.discounted_item_sales_amount,
+    f.item_discount_amount,
+    f.item_tax_amount,
+    f.net_item_sales_amount,
     {{ dbt_housekeeping() }}
 from
     final f
