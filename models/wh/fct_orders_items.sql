@@ -1,7 +1,8 @@
 {{
     config(
         materialized = 'table',
-        file_format = 'delta'
+        file_format = 'delta',
+        persist_docs = {"relation": true, "columns": true}
     )
 }}
 with orders_items as (
